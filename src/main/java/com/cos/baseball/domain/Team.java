@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -32,6 +33,9 @@ public class Team { // 1, 롯데, 2021.03.26, 부산구장
 	@JoinColumn(name = "stadiumId")
 	@OneToOne(cascade = CascadeType.DETACH)
 	private Stadium stadium;
+	
+	@Transient // DB에 칼럼을 만들지 않느다.
+	private int stadiumId;
 	
 	@CreationTimestamp
 	private Timestamp createDate;

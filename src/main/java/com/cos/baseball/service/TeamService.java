@@ -1,8 +1,13 @@
 package com.cos.baseball.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import com.cos.baseball.domain.PlayerRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.cos.baseball.domain.Stadium;
+import com.cos.baseball.domain.StadiumRepository;
+import com.cos.baseball.domain.Team;
 import com.cos.baseball.domain.TeamRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -12,4 +17,17 @@ import lombok.RequiredArgsConstructor;
 public class TeamService {
 
 	private final TeamRepository teamRepository;
+	private final StadiumRepository stadiumRepository;
+	
+	@Transactional
+	public void 팀등록(Team team) {
+		Stadium stadiumEntity = stadiumRepository.findById(team.getStadiumId()).get();
+		team.setStadium(stadiumEntity);
+		teamRepository.save(team);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Team> 팀리스트(){
+		return teamRepository.findAll();
+	}
 }
